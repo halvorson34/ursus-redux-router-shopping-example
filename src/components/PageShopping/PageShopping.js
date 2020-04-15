@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import { connect } from "react-redux";
 
 class PageShopping extends Component {
   state = {
@@ -20,6 +21,8 @@ class PageShopping extends Component {
 
   addProduct = () => {
     //dispatch to add product!
+    this.props.dispatch({ type: "ADD_PRODUCT", payload: this.state });
+
     this.setState({
       name: "",
       price: "",
@@ -31,6 +34,8 @@ class PageShopping extends Component {
   };
 
   render() {
+    console.log(this.props.store);
+
     return (
       <div>
         <h1>What are you buying?</h1>
@@ -47,11 +52,15 @@ class PageShopping extends Component {
         />
         <button onClick={this.addProduct}>Add Product</button>
         <div>
-          <button onClick={this.gotoCheckout}>Cart</button>
+          <button onClick={this.gotoCheckout}>
+            Cart ({this.props.store.cartReducer.products.length})
+          </button>
         </div>
       </div>
     );
   }
 }
 
-export default PageShopping;
+const mapStoreToProps = (store) => ({ store });
+
+export default connect(mapStoreToProps)(PageShopping);
