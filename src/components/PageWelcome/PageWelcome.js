@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import { connect } from "react-redux";
 
 class PageWelcome extends Component {
   state = {
@@ -21,6 +22,9 @@ class PageWelcome extends Component {
 
   handleClick = () => {
     // dispatch user information here!
+
+    this.props.dispatch({ type: "ADD_USER_INFORMATION", payload: this.state });
+
     this.props.history.push("/shop");
   };
 
@@ -47,4 +51,6 @@ class PageWelcome extends Component {
   }
 }
 
-export default PageWelcome;
+const mapStoreToProps = (store) => ({ store });
+
+export default connect(mapStoreToProps)(PageWelcome);
